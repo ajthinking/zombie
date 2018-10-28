@@ -35,6 +35,9 @@ function preload ()
     this.load.json('shapes', 'assets/physics/fruit-shapes.json');
 
     this.load.atlas('sheet', 'assets/physics/fruit-sprites-zombie.png', 'assets/physics/fruit-sprites.json');
+    
+    
+    this.load.atlas('our-sheet', 'data/atlas.png', 'data/atlas.json');
     this.load.spritesheet('boom', 'assets/sprites/explosion.png', { frameWidth: 64, frameHeight: 64, endFrame: 23 });
 }
 
@@ -46,7 +49,7 @@ function create ()
     human.setMass(30);
     human.setFixedRotation();
     zombies = []
-    Array.apply(null, Array(1000)).map(Number.prototype.valueOf,0).forEach(function(index, item) {
+    Array.apply(null, Array(10)).map(Number.prototype.valueOf,0).forEach(function(index, item) {
         var zombie = this.matter.add.sprite(400*Math.random()+item, 400*Math.random()+item, 'sheet', 'orange', {shape: shapes.orange});
         zombie.setFrictionAir(0.15);
         zombie.setMass(30);
@@ -61,6 +64,7 @@ function create ()
     this.matter.world.setBounds(0, 0, 800, 600);
 
     cursors = this.input.keyboard.createCursorKeys();
+    spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
     /******** */
 
@@ -101,15 +105,21 @@ function create ()
         zombie.thrust(zombie.dir - 0.05)
     })
 
+    if(spaceBar.isDown) {
+        var boom = this.add.sprite(
+            human.x+300*Math.cos(2*Math.PI*human.angle/360),
+            human.y+300*Math.sin(2*Math.PI*human.angle/360),
+            human.y,
+            'boom',
+            23
+        );
+        
+        boom.anims.play('explode')
+    }
+
 }
 
 function random() {
     var x = Math.sin(seed++) * 10000;
     return x - Math.floor(x);
 }
-
-/*
-        var boom = this.add.sprite(100, 100, 'boom', 23);
-        
-        boom.anims.play('explode')
-*/
