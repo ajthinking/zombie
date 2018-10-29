@@ -28,7 +28,9 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
-
+    this.load.audio('bg', [
+        'audio/zombie.mp3'
+      ]);
     
     this.load.image('block', 'assets/sprites/block.png');
     this.load.image('ship', 'assets/sprites/x2kship.png');
@@ -46,7 +48,6 @@ function preload ()
 
 function create ()
 {
-    
     var config = {
         key: 'walk',
         
@@ -61,6 +62,10 @@ function create ()
     };
 
     this.anims.create(config);
+
+
+    this.sound_bg = this.sound.add('bg', { loop: true });
+    this.sound_bg.play()
 
     var shapes = this.cache.json.get('shapes');
     human = this.matter.add.sprite(100, 100, 'mummy');
@@ -129,13 +134,16 @@ function create ()
     })
 
     if(spaceBar.isDown) {
+        
         var boom = this.add.sprite(
             human.x+300*Math.cos(2*Math.PI*human.angle/360),
             human.y+300*Math.sin(2*Math.PI*human.angle/360),
-            human.y,
             'boom',
             23
         );
+        
+        
+        //boom = this.add.sprite(100, 100, 'boom', 23);
         
         boom.anims.play('explode')
     }
