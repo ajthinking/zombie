@@ -28,7 +28,9 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
-
+    this.load.audio('bg', [
+        'audio/zombie.mp3'
+      ]);
     
     this.load.image('block', 'assets/sprites/block.png');
     this.load.image('ship', 'assets/sprites/x2kship.png');
@@ -43,6 +45,8 @@ function preload ()
 
 function create ()
 {
+    this.sound_bg = this.sound.add('bg', { loop: true });
+    this.sound_bg.play()
     var shapes = this.cache.json.get('shapes');
     human = this.matter.add.sprite(300, 400, 'ship');
     human.setFrictionAir(0.15);
