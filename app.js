@@ -39,12 +39,35 @@ function preload ()
     
     this.load.atlas('our-sheet', 'data/atlas.png', 'data/atlas.json');
     this.load.spritesheet('boom', 'assets/sprites/explosion.png', { frameWidth: 64, frameHeight: 64, endFrame: 23 });
+
+    //
+    this.load.spritesheet('mummy', 'assets/animations/mummy37x45.png', { frameWidth: 37, frameHeight: 45 });
 }
 
 function create ()
 {
+    
+    var config = {
+        key: 'walk',
+        
+        frames: [
+            {key: "our-sheet", frame: "human1.png"},
+            {key: "our-sheet", frame: "human2.png"},
+            {key: "our-sheet", frame: "human3.png"},
+            {key: "our-sheet", frame: "human4.png"},
+        ],
+        frameRate: 6,
+        repeat: -1
+    };
+
+    this.anims.create(config);
+
     var shapes = this.cache.json.get('shapes');
-    human = this.matter.add.sprite(300, 400, 'ship');
+    human = this.matter.add.sprite(100, 100, 'mummy');
+    human.anims.load('walk');
+    human.anims.play('walk');
+
+
     human.setFrictionAir(0.15);
     human.setMass(30);
     human.setFixedRotation();
