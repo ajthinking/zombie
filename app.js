@@ -106,13 +106,16 @@ function create ()
     })
 
     if(spaceBar.isDown) {
+        
         var boom = this.add.sprite(
             human.x+300*Math.cos(2*Math.PI*human.angle/360),
             human.y+300*Math.sin(2*Math.PI*human.angle/360),
-            human.y,
             'boom',
             23
         );
+        
+        
+        //boom = this.add.sprite(100, 100, 'boom', 23);
         
         boom.anims.play('explode')
     }
