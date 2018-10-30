@@ -7,6 +7,7 @@ var config = {
     physics: {
         default: 'matter',
         matter: {
+            debug: true,
             gravity: {
                 x: 0,
                 y: 0
@@ -48,9 +49,8 @@ function preload ()
 
 function create ()
 {
-    var config = {
-        key: 'walk',
-        
+    var humanWalk = {
+        key: 'human-walk',    
         frames: [
             {key: "our-sheet", frame: "human1.png"},
             {key: "our-sheet", frame: "human2.png"},
@@ -61,28 +61,47 @@ function create ()
         repeat: -1
     };
 
-    this.anims.create(config);
+    var zombieWalk = {
+        key: 'zombie-walk',    
+        frames: [
+            {key: "our-sheet", frame: "zombie1.png"},
+            {key: "our-sheet", frame: "zombie2.png"},
+            {key: "our-sheet", frame: "zombie3.png"},
+            {key: "our-sheet", frame: "zombie4.png"},
+        ],
+        frameRate: 6,
+        repeat: -1
+    };    
 
+    this.anims.create(humanWalk);
+    this.anims.create(zombieWalk);
+    this.debug = true;
 
     this.sound_bg = this.sound.add('bg', { loop: true });
     this.sound_bg.play()
 
     var shapes = this.cache.json.get('shapes');
     human = this.matter.add.sprite(100, 100, 'mummy');
-    human.anims.load('walk');
-    human.anims.play('walk');
+    human.setCircle();
+    human.anims.load('human-walk');
+    human.anims.play('human-walk');
+    human.setScale(0.3) 
 
 
     human.setFrictionAir(0.15);
     human.setMass(30);
     human.setFixedRotation();
     zombies = []
-    Array.apply(null, Array(10)).map(Number.prototype.valueOf,0).forEach(function(index, item) {
+    Array.apply(null, Array(100)).map(Number.prototype.valueOf,0).forEach(function(index, item) {
         var zombie = this.matter.add.sprite(400*Math.random()+item, 400*Math.random()+item, 'sheet', 'orange', {shape: shapes.orange});
+        zombie.setCircle();
         zombie.setFrictionAir(0.15);
         zombie.setMass(30);
         zombie.dir = Math.random()*0.1
         zombie.interval = 2 + (item%3)
+        zombie.anims.load('zombie-walk');
+        zombie.anims.play('zombie-walk');
+        zombie.setScale(0.3)        
         //zombie.setFixedRotation();
         zombies.push(zombie)        
     }.bind(this));
@@ -126,11 +145,11 @@ function create ()
         var d = new Date();
         var n = d.getSeconds();
         if(n % zombie.interval == 0) {
-            zombie.dir = Math.random()*0.1
+            zombie.dir = Math.random()*0.03
             zombie.setAngularVelocity(0.02);
         }
 
-        zombie.thrust(zombie.dir - 0.05)
+        zombie.thrust(zombie.dir - 0.01)
     })
 
     if(spaceBar.isDown) {
