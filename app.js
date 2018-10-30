@@ -41,6 +41,7 @@ function preload ()
     
     
     this.load.atlas('our-sheet', 'data/atlas.png', 'data/atlas.json');
+    this.load.atlas('new-sheet', 'data/packer-test.png', 'data/packer-test.json');
     this.load.spritesheet('boom', 'assets/sprites/explosion.png', { frameWidth: 64, frameHeight: 64, endFrame: 23 });
 
     //
@@ -52,16 +53,16 @@ function create ()
     var humanWalk = {
         key: 'human-walk',    
         frames: [
-            {key: "our-sheet", frame: "human1.png"},
-            {key: "our-sheet", frame: "human2.png"},
-            {key: "our-sheet", frame: "human3.png"},
-            {key: "our-sheet", frame: "human4.png"},
+            {key: "new-sheet", frame: "human1.png"},
+            {key: "new-sheet", frame: "human2.png"},
+            {key: "new-sheet", frame: "human3.png"},
+            {key: "new-sheet", frame: "human4.png"},
         ],
         frameRate: 6,
         
         repeat: -1
     };
-
+    /*
     var zombieWalk = {
         key: 'zombie-walk',    
         frames: [
@@ -74,11 +75,11 @@ function create ()
         
         repeat: -1
     };    
-
+    */
     
 
     this.anims.create(humanWalk);
-    console.log(this.anims.create(zombieWalk));
+    //console.log(this.anims.create(zombieWalk));
     this.debug = true;
 
     this.sound_bg = this.sound.add('bg', { loop: true });
@@ -96,7 +97,7 @@ function create ()
     human.setMass(30);
     human.setFixedRotation();
     zombies = []
-    Array.apply(null, Array(100)).map(Number.prototype.valueOf,0).forEach(function(index, item) {
+    Array.apply(null, Array(0)).map(Number.prototype.valueOf,0).forEach(function(index, item) {
         var zombie = this.matter.add.sprite(400*Math.random()+item, 400*Math.random()+item, 'sheet', 'orange', {shape: shapes.orange});
         zombie.setCircle(5);
         zombie.setFrictionAir(0.15);
