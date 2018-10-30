@@ -58,6 +58,7 @@ function create ()
             {key: "our-sheet", frame: "human4.png"},
         ],
         frameRate: 6,
+        
         repeat: -1
     };
 
@@ -70,22 +71,25 @@ function create ()
             {key: "our-sheet", frame: "zombie4.png"},
         ],
         frameRate: 6,
+        
         repeat: -1
     };    
 
+    
+
     this.anims.create(humanWalk);
-    this.anims.create(zombieWalk);
+    console.log(this.anims.create(zombieWalk));
     this.debug = true;
 
     this.sound_bg = this.sound.add('bg', { loop: true });
-    this.sound_bg.play()
+    //this.sound_bg.play()
 
     var shapes = this.cache.json.get('shapes');
     human = this.matter.add.sprite(100, 100, 'mummy');
-    human.setCircle();
+    human.setCircle(5);
     human.anims.load('human-walk');
     human.anims.play('human-walk');
-    human.setScale(0.3) 
+    //human.setScale() 
 
 
     human.setFrictionAir(0.15);
@@ -94,15 +98,13 @@ function create ()
     zombies = []
     Array.apply(null, Array(100)).map(Number.prototype.valueOf,0).forEach(function(index, item) {
         var zombie = this.matter.add.sprite(400*Math.random()+item, 400*Math.random()+item, 'sheet', 'orange', {shape: shapes.orange});
-        zombie.setCircle();
+        zombie.setCircle(5);
         zombie.setFrictionAir(0.15);
         zombie.setMass(30);
         zombie.dir = Math.random()*0.1
         zombie.interval = 2 + (item%3)
-        zombie.anims.load('zombie-walk');
+        zombieWalk = zombie.anims.load('zombie-walk');
         zombie.anims.play('zombie-walk');
-        zombie.setScale(0.3)        
-        //zombie.setFixedRotation();
         zombies.push(zombie)        
     }.bind(this));
 
