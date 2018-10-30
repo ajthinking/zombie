@@ -7,7 +7,7 @@ var config = {
     physics: {
         default: 'matter',
         matter: {
-            debug: true,
+            //debug: true,
             gravity: {
                 x: 0,
                 y: 0
@@ -62,24 +62,26 @@ function create ()
         
         repeat: -1
     };
-    /*
+    
     var zombieWalk = {
         key: 'zombie-walk',    
         frames: [
-            {key: "our-sheet", frame: "zombie1.png"},
-            {key: "our-sheet", frame: "zombie2.png"},
-            {key: "our-sheet", frame: "zombie3.png"},
-            {key: "our-sheet", frame: "zombie4.png"},
+            {key: "new-sheet", frame: "zombie1.png"},
+            {key: "new-sheet", frame: "zombie2.png"},
+            {key: "new-sheet", frame: "zombie3.png"},
+            {key: "new-sheet", frame: "zombie4.png"},
+            {key: "new-sheet", frame: "zombie5.png"},
+            {key: "new-sheet", frame: "zombie6.png"},
         ],
         frameRate: 6,
         
         repeat: -1
     };    
-    */
+    
     
 
     this.anims.create(humanWalk);
-    //console.log(this.anims.create(zombieWalk));
+    this.anims.create(zombieWalk);
     this.debug = true;
 
     this.sound_bg = this.sound.add('bg', { loop: true });
@@ -87,7 +89,7 @@ function create ()
 
     var shapes = this.cache.json.get('shapes');
     human = this.matter.add.sprite(100, 100, 'mummy');
-    human.setCircle(5);
+    human.setCircle(12);
     human.anims.load('human-walk');
     human.anims.play('human-walk');
     //human.setScale() 
@@ -97,9 +99,9 @@ function create ()
     human.setMass(30);
     human.setFixedRotation();
     zombies = []
-    Array.apply(null, Array(0)).map(Number.prototype.valueOf,0).forEach(function(index, item) {
+    Array.apply(null, Array(1000)).map(Number.prototype.valueOf,0).forEach(function(index, item) {
         var zombie = this.matter.add.sprite(400*Math.random()+item, 400*Math.random()+item, 'sheet', 'orange', {shape: shapes.orange});
-        zombie.setCircle(5);
+        zombie.setCircle(12);
         zombie.setFrictionAir(0.15);
         zombie.setMass(30);
         zombie.dir = Math.random()*0.1
