@@ -2,7 +2,7 @@ var config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    backgroundColor: '#1b1464',
+    backgroundColor: '#000000',
     parent: 'phaser-example',
     physics: {
         default: 'matter',
@@ -32,6 +32,9 @@ function preload ()
     this.load.audio('bg', [
         'audio/zombie.mp3'
       ]);
+      this.load.audio('machine-gun', [
+        'audio/machine-gun.mp3'
+      ]);      
     
     this.load.image('block', 'assets/sprites/block.png');
     this.load.image('ship', 'assets/sprites/x2kship.png');
@@ -85,7 +88,8 @@ function create ()
     this.debug = true;
 
     this.sound_bg = this.sound.add('bg', { loop: true });
-    //this.sound_bg.play()
+    this.gun = this.sound.add('machine-gun', { loop: false });
+    this.sound_bg.play()
 
     var shapes = this.cache.json.get('shapes');
     human = this.matter.add.sprite(100, 100, 'mummy');
@@ -99,7 +103,7 @@ function create ()
     human.setMass(30);
     human.setFixedRotation();
     zombies = []
-    Array.apply(null, Array(1000)).map(Number.prototype.valueOf,0).forEach(function(index, item) {
+    Array.apply(null, Array(100)).map(Number.prototype.valueOf,0).forEach(function(index, item) {
         var zombie = this.matter.add.sprite(400*Math.random()+item, 400*Math.random()+item, 'sheet', 'orange', {shape: shapes.orange});
         zombie.setCircle(12);
         zombie.setFrictionAir(0.15);
@@ -166,6 +170,8 @@ function create ()
             23
         );
         
+        
+        this.gun.play()
         
         //boom = this.add.sprite(100, 100, 'boom', 23);
         
