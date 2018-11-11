@@ -1,7 +1,5 @@
 import animations from './animations.js'
 
-animations()
-
 var config = {
     type: Phaser.AUTO,
     width: 800,
@@ -42,38 +40,12 @@ var config = {
             this.load.spritesheet('mummy', 'assets/animations/mummy37x45.png', { frameWidth: 37, frameHeight: 45 });            
         },
         create: function() {
-            var humanWalk = {
-                key: 'human-walk',    
-                frames: [
-                    {key: "new-sheet", frame: "human1.png"},
-                    {key: "new-sheet", frame: "human2.png"},
-                    {key: "new-sheet", frame: "human3.png"},
-                    {key: "new-sheet", frame: "human4.png"},
-                ],
-                frameRate: 6,
-                
-                repeat: -1
-            };
-            
-            var zombieWalk = {
-                key: 'zombie-walk',    
-                frames: [
-                    {key: "new-sheet", frame: "zombie1.png"},
-                    {key: "new-sheet", frame: "zombie2.png"},
-                    {key: "new-sheet", frame: "zombie3.png"},
-                    {key: "new-sheet", frame: "zombie4.png"},
-                    {key: "new-sheet", frame: "zombie5.png"},
-                    {key: "new-sheet", frame: "zombie6.png"},
-                ],
-                frameRate: 6,
-                
-                repeat: -1
-            };    
+   
             
             
         
-            this.anims.create(humanWalk);
-            this.anims.create(zombieWalk);
+            this.anims.create(animations.humanWalk);
+            this.anims.create(animations.zombieWalk);
             this.debug = true;
         
             this.sound_bg = this.sound.add('bg', { loop: true });
@@ -99,7 +71,7 @@ var config = {
                 zombie.setMass(30);
                 zombie.dir = Math.random()*0.1
                 zombie.interval = 2 + (item%3)
-                zombieWalk = zombie.anims.load('zombie-walk');
+                zombie.anims.load('zombie-walk');
                 zombie.anims.play('zombie-walk');
                 this.zombies.push(zombie)        
             }.bind(this));
