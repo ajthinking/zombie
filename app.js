@@ -11,11 +11,8 @@ var config = {
     physics: {
         default: 'matter',
         matter: {
-            //debug: true,
-            gravity: {
-                x: 0,
-                y: 0
-            }
+            debug: settings.debug,
+            gravity: {x: 0, y: 0}
         }
     },
     scene: {
@@ -23,7 +20,6 @@ var config = {
         create: function() {
             this.anims.create(animations.humanWalk);
             this.anims.create(animations.zombieWalk);
-            this.debug = true;
         
             this.sound_bg = this.sound.add('bg', { loop: true });
             this.gun = this.sound.add('machine-gun', { loop: false });
@@ -44,7 +40,6 @@ var config = {
                 zombie.setCircle(12);
                 zombie.setFrictionAir(0.15);
                 zombie.setMass(30);
-                zombie.dir = Math.random()*0.1
                 zombie.interval = 2 + (item%3)
                 zombie.anims.load('zombie-walk');
                 zombie.anims.play('zombie-walk');
@@ -117,11 +112,5 @@ var config = {
 var image;
 var cursors;
 var spaceBar;
-var seed = 1;
 
 var game = new Phaser.Game(config);
-
-function random() {
-    var x = Math.sin(seed++) * 10000;
-    return x - Math.floor(x);
-}
