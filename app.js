@@ -1,5 +1,6 @@
 import animations from './animations.js'
 import preload from './preload.js'
+import settings from './settings.js'
 
 var config = {
     type: Phaser.AUTO,
@@ -20,25 +21,19 @@ var config = {
     scene: {
         preload: preload,
         create: function() {
-   
-            
-            
-        
             this.anims.create(animations.humanWalk);
             this.anims.create(animations.zombieWalk);
             this.debug = true;
         
             this.sound_bg = this.sound.add('bg', { loop: true });
             this.gun = this.sound.add('machine-gun', { loop: false });
-            //this.sound_bg.play()
+            settings.music ? this.sound_bg.play() : null;
         
             var shapes = this.cache.json.get('shapes');
             this.human = this.matter.add.sprite(100, 100, 'mummy');
             this.human.setCircle(12);
             this.human.anims.load('human-walk');
             this.human.anims.play('human-walk');
-            //human.setScale() 
-        
         
             this.human.setFrictionAir(0.15);
             this.human.setMass(30);
