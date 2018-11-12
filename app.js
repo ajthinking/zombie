@@ -27,12 +27,17 @@ var config = {
         
             var shapes = this.cache.json.get('shapes');
             this.human = this.matter.add.sprite(100, 100, 'mummy');
-            this.human.setCircle(12);
+            this.human.isHuman = true;
+            this.human.setCircle(24);
             this.human.anims.load('human-walk');
             this.human.anims.play('human-walk');
+            var cat1 = this.matter.world.nextCategory();
+            var cat2 = this.matter.world.nextCategory();
+            this.human.setCollisionCategory(cat1);
+            
         
             this.human.setFrictionAir(0.15);
-            this.human.setMass(30);
+            this.human.setMass(300);
             this.human.setFixedRotation();
             this.zombies = []
             Array.apply(null, Array(100)).map(Number.prototype.valueOf,0).forEach(function(index, item) {
@@ -43,9 +48,17 @@ var config = {
                 zombie.interval = 2 + (item%3)
                 zombie.anims.load('zombie-walk');
                 zombie.anims.play('zombie-walk');
-                this.zombies.push(zombie)        
+                zombie.setCollidesWith([cat1]);
+                this.zombies.push(zombie)
             }.bind(this));
         
+            this.matter.world.on('collisionstart', function (event) {
+
+                console.log("YEAH!")
+        
+            });
+
+
             
         
             this.matter.world.setBounds(0, 0, 800, 600);
@@ -75,7 +88,7 @@ var config = {
         
             if (cursors.up.isDown)
             {
-                this.human.thrust(0.08);
+                this.human.thrust(0.8);
             }
         
             this.zombies.forEach(function(zombie) {
@@ -98,10 +111,7 @@ var config = {
                     23
                 );
                 
-                
                 this.gun.play()
-                
-                //boom = this.add.sprite(100, 100, 'boom', 23);
                 
                 boom.anims.play('explode')
             }            
