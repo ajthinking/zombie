@@ -3,6 +3,7 @@ import preload from './preload.js'
 import create from './create.js'
 import update from './update.js'
 import settings from './settings.js'
+import Zombie from './Zombie.js'
 
 var config = {
     type: Phaser.AUTO,
