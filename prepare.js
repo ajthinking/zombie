@@ -1,1 +1,0 @@
-console.log("Starting up image preparation script")
